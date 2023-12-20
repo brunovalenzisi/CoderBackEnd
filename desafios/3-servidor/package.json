@@ -1,0 +1,18 @@
+{
+  "name": "3-servidor",
+  "version": "1.0.0",
+  "description": "desafio3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./src/app.js --ignore ./products.json "
+  },
+  "author": "BValenzisi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
