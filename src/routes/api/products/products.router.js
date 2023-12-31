@@ -43,9 +43,6 @@ const {title, description,code, price,stock,category,thumbnails} = req.body
 const nuevoProducto = await manager.addProduct(title, description,code, price,stock,category,thumbnails)
 console.log(nuevoProducto)
 res.json(nuevoProducto)
-
-
-
 })
 
 router.put("/api/products/:pid",async (req,res)=>{
@@ -54,15 +51,20 @@ router.put("/api/products/:pid",async (req,res)=>{
         const update={...req.body}
         const respuesta= await manager.updateProduct(id,update)
         res.json(respuesta)
-       
-       
-    }
+       }
     catch{(err)=>{res.send(err)}}
-
-
-
-
 })
+
+router.delete("/api/products/:pid",async (req,res)=>{
+    try{
+        const id= req.params.pid
+        const respuesta= await manager.deleteProduct(id)
+        res.json(respuesta)
+       }
+    catch{(err)=>{res.send(err)}}
+})
+
+
 
 
 

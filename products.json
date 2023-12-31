@@ -13,35 +13,5 @@
       "https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwd44675a4/products/CO_D1558301/CO_D1558301-2.JPG",
       "https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw9cdc471d/products/CO_D1558301/CO_D1558301-3.JPG"
     ]
-  },
-  {
-    "title": "test",
-    "description": "La Bermuda Converse All Star es tu aliada ideal para llevar con vos a la calle. Su corte clásico con el mítico logo All Star en el bordo inferior la vuelven una prenda básica y necesaria para los amantes de la moda,",
-    "code": 75843,
-    "price": "24.099",
-    "status": true,
-    "stock": "10",
-    "category": "Indumentaria",
-    "thumbnails": [
-      "https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwbd0e45d1/products/CO_D1558301/CO_D1558301-1.JPG",
-      "https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwd44675a4/products/CO_D1558301/CO_D1558301-2.JPG",
-      "https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw9cdc471d/products/CO_D1558301/CO_D1558301-3.JPG"
-    ],
-    "id": 8880982
-  },
-  {
-    "title": "Bermuda Converse All Star",
-    "description": "La Bermuda Converse All Star es tu aliada ideal para llevar con vos a la calle. Su corte clásico con el mítico logo All Star en el bordo inferior la vuelven una prenda básica y necesaria para los amantes de la moda,",
-    "code": 75844,
-    "price": "24.099",
-    "status": true,
-    "stock": "10",
-    "category": "Indumentaria",
-    "thumbnails": [
-      "https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwbd0e45d1/products/CO_D1558301/CO_D1558301-1.JPG",
-      "https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwd44675a4/products/CO_D1558301/CO_D1558301-2.JPG",
-      "https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw9cdc471d/products/CO_D1558301/CO_D1558301-3.JPG"
-    ],
-    "id": 3370010
   }
 ]

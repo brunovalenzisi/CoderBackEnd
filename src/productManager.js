@@ -104,7 +104,7 @@ class ProductManager {
       const products = await ProductManager.readFile();
       console.log(products)
       const productIndex = products.findIndex((prod) => prod.id == id);
-      if (productIndex === -1) {
+      if (productIndex == -1) {
         return("Producto no encontrado");
         
       }
@@ -117,13 +117,14 @@ class ProductManager {
 
   async deleteProduct(id) {
     const products = await ProductManager.readFile();
-    const productIndex = products.findIndex((prod) => prod.id === id);
-    if (productIndex === -1) {
-      console.log("Producto no encontrado");
-      return;
+    const productIndex = products.findIndex((prod) => prod.id == id);
+    if (productIndex == -1) {
+      return("Producto no encontrado");
+      
     }
     products.splice(productIndex, 1);
     await ProductManager.writeFile(products);
+    return("Producto eliminado con exito");
   }
 
   static async readFile() {
