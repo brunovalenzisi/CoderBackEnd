@@ -67,7 +67,7 @@ class ProductManager {
 
       await nuevoProducto.asignarId();
 
-      console.log(nuevoProducto);
+      
       products.push(nuevoProducto);
       await ProductManager.writeFile(products);
       return nuevoProducto;
@@ -102,7 +102,6 @@ class ProductManager {
       return("No puedes actualizar el id del producto");
     } else {
       const products = await ProductManager.readFile();
-      console.log(products)
       const productIndex = products.findIndex((prod) => prod.id == id);
       if (productIndex == -1) {
         return("Producto no encontrado");
