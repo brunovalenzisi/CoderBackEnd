@@ -42,6 +42,7 @@ router.post("/api/products",async (req,res)=>{
 const {title, description,code, price,stock,category,thumbnails} = req.body
 const nuevoProducto = await manager.addProduct(title, description,code, price,stock,category,thumbnails)
 res.status(200).json(nuevoProducto)
+
 })
 
 router.put("/api/products/:pid",async (req,res)=>{
