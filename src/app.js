@@ -31,8 +31,22 @@ io.on('connection', (socket) => {
   console.log('Nuevo usuario conectado');
   socket.on('refresh', async() => {
     const products= await manager.getProducts() 
-    io.sockets.emit("respuesta",JSON.stringify(products))
-   });
+    io.sockets.emit("productos",JSON.stringify(products))
+  });
+  
+  socket.on("add", async(product) => {
+  const nuevoProducto=JSON.parse(product)
+  const{title,description,code,price,stock,category,thumbnails}=nuevoProducto  
+  await manager.addProduct(title,description,code,price,stock,category,thumbnails)
+  const products= await manager.getProducts() 
+  io.sockets.emit("productos",JSON.stringify(products))
+  })
+  
+  socket.on("delete", async(id) => {
+  await manager.deleteProduct(id)
+  const products= await manager.getProducts() 
+  io.sockets.emit("productos",JSON.stringify(products))
+  })
 });
 
 
