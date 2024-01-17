@@ -12,6 +12,7 @@ socket.emit("refresh")
 
 socket.on("productos",(data)=>{
     let products=[]
+    productList.innerHTML=""
     products=JSON.parse(data)
     products.forEach(product => {productList.innerHTML+=
    `<div class="producto">
@@ -22,12 +23,11 @@ socket.on("productos",(data)=>{
     <p>Descripción: ${product.description}</p>
     <p>Categoría: ${product.category}</p>
     <p>Stock: ${product.stock}</p>
-
-    
     <div class="thumbnails">
          <p>Imagenes del producto</p>
          ${product.thumbnails.map(link => `<p>${link}</p>`).join('')}
     </div>
+    <button onclick="eliminarProducto(${product.id})">Eliminar</button>
 </div>`
         
     });}
@@ -50,4 +50,9 @@ function guardarProducto(){
 }else(alert("debes completar todos los campos"))
 
 
+}
+
+
+function eliminarProducto(id){
+    socket.emit("delete",id)
 }
