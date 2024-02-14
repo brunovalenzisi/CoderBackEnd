@@ -90,6 +90,18 @@ router.put("/api/carts/:cid/products/:pid", async (req, res) => {
   }
 });
 
+router.delete("/api/carts/:cid", async (req, res) => {
+  try {
+    const cid = req.params.cid
+    const respuesta = await manager.clearCart(cid);
+    res.status(200).json(respuesta);
+  } catch {
+    (err) => {
+      res.status(500).send(err);
+    };
+  }
+});
+
 
 
 module.exports = router;
