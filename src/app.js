@@ -6,6 +6,10 @@ const manager = new ProductManager();
 const exphbs = require('express-handlebars');
 const socket = require('socket.io');
 const path = require('path');
+require("./dbConection")
+
+
+
 
 app.engine('handlebars', exphbs.engine());
 app.set('view engine', 'handlebars');
@@ -19,6 +23,8 @@ app.use(require('./routes/api/products/products.router'));
 app.use(require('./routes/api/carts/carts.router'));
 app.use(require('./routes/views/home.router'));
 app.use(require('./routes/views/realtimeproducts.router'));
+
+
 
 const httpServer = app.listen(PORT, () => {
   console.log('Servidor escuchando en el puerto:', PORT);
