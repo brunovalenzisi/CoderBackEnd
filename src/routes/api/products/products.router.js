@@ -30,7 +30,7 @@ router.get("/api/products",async (req,res)=>{
             respuesta.prevLink+=`&&limit=${limit}`
             respuesta.nextLink+=`&&limit=${limit}`
     }
-       
+       console.log(respuesta)
     res.json(respuesta)
 
     }

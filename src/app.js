@@ -21,7 +21,7 @@ app.use(express.json());
 
 app.use(require('./routes/api/products/products.router'));
 app.use(require('./routes/api/carts/carts.router'));
-app.use(require('./routes/views/home.router'));
+app.use(require('./routes/views/views.router'));
 app.use(require('./routes/views/realtimeproducts.router'));
 
 
