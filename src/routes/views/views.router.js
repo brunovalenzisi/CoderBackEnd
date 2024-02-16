@@ -5,7 +5,7 @@ const CartManager=require("../../cartManager")
 const productManager = new ProductManager
 const cartManager = new CartManager
 
-router.get("/", async (req, res) => {
+router.get("/products", async (req, res) => {
     try{
         const hostURL = `${req.protocol}://${req.get("host")}`;
         const limit=req.query.limit
@@ -36,9 +36,24 @@ router.get("/carts/:cid", async (req, res) => {
         
         const cart=req.params.cid
         const consulta= await cartManager.getCartById(cart)
-               
+        const id=consulta._id.toString()
         
-        res.render("cart", {consulta});
+       
+        const data= consulta.products.map((doc)=>{return{
+            _id: doc.product._id,
+            code: doc.product.code,
+            title: doc.product.title,
+            price: doc.product.price,
+            description: doc.product.description,
+            category: doc.product.category,
+            subCategory: doc.product.subCategory,
+            thumbnails: doc.product.thumbnails,
+            genre: doc.product.genre,
+            stock: doc.product.stock,
+            quantity: doc.quantity
+            }})
+
+        res.render("cart", {data,id});
 
     }catch(e){console.error(e)}
 })

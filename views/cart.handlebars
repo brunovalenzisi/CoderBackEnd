@@ -1,7 +1,12 @@
-{{#each data}}
+<h1>Carrito de compras</h1>
+<h2>ID del carrito: {{id}}</h2>
+
+{{#each data }}
 
     <div class="producto">
         <h2>{{this.title}}</h2>
+
+        <p>Unidades: {{this.quantity}}</p>
         <p>ID: {{this._id}}</p>
         <p>Código: {{this.code}}</p>
         <p>Precio: {{this.price}}</p>
@@ -18,22 +23,7 @@
              <img src="{{this}}" alt="imagen">
            {{/each }}
         </div>
-       <form action="{{this.hostURL}}/api/carts/65cb8858825857db2a02ffd4/products/{{this._id}}" method="post">
-       <button>Agregar AL carrito</button></form>
-       
     </div>
 
 {{/each }}
-
-{{#if consulta.totalPages}}
-  <div class="pagination">
-    {{#if consulta.hasNextPage}}
-      <a href="{{hostURL}}/products/?page={{consulta.nextPage}}">Siguiente</a>
-    {{/if}}
-    {{#if consulta.hasPrevPage}}
-      <a href="{{hostURL}}/products/?page={{consulta.prevPage}}">Anterior</a>
-    {{/if}}
-  </div>
-{{/if}}
-
 
