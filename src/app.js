@@ -1,11 +1,16 @@
 const express = require('express');
-const app = express();
-const PORT = 8080;
+require('dotenv').config()
 const ProductManager = require('./productManager');
 const manager = new ProductManager();
 const exphbs = require('express-handlebars');
 const socket = require('socket.io');
 const path = require('path');
+const session = require("express-session")
+const FileStore=require("session-file-store")
+const filestore= FileStore(session)
+const MongoStore=require("connect-mongo")
+const app = express();
+const PORT = 8080;
 require("./dbConection")
 
 
@@ -18,12 +23,23 @@ app.set('view engine', 'handlebars');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(session({
+  secret: process.env.COOKIE_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  store: MongoStore.create({
+    mongoUrl: process.env.URI,
+    ttl:3600
+  })
+}))
 
 app.use(require('./routes/api/products/products.router'));
 app.use(require('./routes/api/carts/carts.router'));
 app.use(require('./routes/views/views.router'));
 app.use(require('./routes/views/realtimeproducts.router'));
-
+app.use(require('./routes/api/users/user.router'));
+app.use(require('./routes/api/users/session.router'));
+app.use(require('./routes/views/sessions.router'));
 
 
 const httpServer = app.listen(PORT, () => {

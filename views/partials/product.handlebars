@@ -1,5 +1,9 @@
-{{#each data}}
 
+{{#if user.admin }}
+  <h1>Tienes permisos de administrador</h1>
+{{/if}}
+
+{{#each data}}
     <div class="producto">
         <h2>{{this.title}}</h2>
         <p>ID: {{this._id}}</p>
@@ -11,7 +15,6 @@
         <p>Género: {{this.genre}}</p>
         <p>Stock: {{this.stock}}</p>
 
-        
         <div class="thumbnails">
              <p>Imagenes del producto</p>
             {{#each this.thumbnails }}
@@ -22,7 +25,6 @@
        <button>Agregar AL carrito</button></form>
        
     </div>
-
 {{/each }}
 
 {{#if consulta.totalPages}}
@@ -35,5 +37,6 @@
     {{/if}}
   </div>
 {{/if}}
+
 
 
