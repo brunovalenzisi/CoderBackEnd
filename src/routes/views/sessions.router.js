@@ -8,6 +8,14 @@ router.get("/login", async (req, res) => {
     }catch(e){console.error(e)}
 })
 
+router.get("/sign-up", async (req, res) => {
+    try{
+        res.render("sign-up");
+
+    }catch(e){console.error(e)}
+})
+
+
 
 
 module.exports = router; 

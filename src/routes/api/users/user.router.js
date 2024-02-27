@@ -10,7 +10,7 @@ router.post("/api/users/sign-up", async (req, res) => {
     if(email==="adminCoder@coder.com" && password==="adminCod3er123"){user.role="admin"}
 
     await userModel.create(user);
-    res.status(200).send("Usuario creado con éxito");
+    res.redirect("/login");
   } catch (e) {
     console.log(e);
     res.status(400).send("Error al crear usuario");
