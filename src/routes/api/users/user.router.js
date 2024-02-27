@@ -7,8 +7,6 @@ router.post("/api/users/sign-up", async (req, res) => {
 
   try {
     const user={ first_name, last_name, email, password, age} 
-    if(email==="adminCoder@coder.com" && password==="adminCod3er123"){user.role="admin"}
-
     await userModel.create(user);
     res.redirect("/login");
   } catch (e) {

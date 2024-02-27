@@ -10,7 +10,8 @@ router.post("/api/users/login", async (req, res) => {
     const user = await userModel.findOne({ email: email });
     if (user) {
       if (user.password === password) {
-        req.session.role=user.role
+
+        if(user.email === "adminCoder@coder.com" && user.password ==="adminCod3r123") {req.session.role="admin"}else{req.session.role==="user"}
         req.session.user_first_name=user.first_name;
         req.session.login = true;
         res.status(200).redirect("/products")
