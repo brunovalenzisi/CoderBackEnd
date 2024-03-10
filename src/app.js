@@ -6,8 +6,8 @@ const exphbs = require('express-handlebars');
 const socket = require('socket.io');
 const path = require('path');
 const session = require("express-session")
-const FileStore=require("session-file-store")
-const filestore= FileStore(session)
+const passport = require("passport");
+const initializePassport = require("./config/passport.config.js")
 const MongoStore=require("connect-mongo")
 const app = express();
 const PORT = 8080;
@@ -32,6 +32,9 @@ app.use(session({
     ttl:3600
   })
 }))
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use(require('./routes/api/products/products.router'));
 app.use(require('./routes/api/carts/carts.router'));
