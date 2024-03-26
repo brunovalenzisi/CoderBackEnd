@@ -80,7 +80,6 @@ router.put("/api/carts/:cid/products/:pid", async (req, res) => {
     const cid = req.params.cid;
     const pid = req.params.pid;
     const quantity=req.body.quantity
-    console.log(cid,pid,quantity);
     const respuesta = await manager.updateProduct(cid, pid,quantity);
     res.status(200).json(respuesta);
   } catch {

@@ -1,7 +1,8 @@
 const  mongoose = require('mongoose');
-require('dotenv').config()
+const{uri}=require('./config/config.js')
 
- mongoose.connect(process.env.URI)
+
+ mongoose.connect(uri)
   .then(() => {
     console.log('Conexión exitosa a MongoDB');
   })

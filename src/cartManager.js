@@ -40,7 +40,6 @@ class CartManager {
 }
   async removeFromCart(cid, pid) {
     try{
-      console.log(cid)
       const cart = await cartModel.findById(cid);
       if(cart.products.some(prod=> prod.product.toString() == pid)){
         const index=cart.products.findIndex(product=>product._id==pid)

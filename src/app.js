@@ -12,6 +12,7 @@ const MongoStore=require("connect-mongo")
 const app = express();
 const PORT = 8080;
 require("./dbConection")
+const {cookie_secret,uri}=require("./config/config.js")
 
 
 
@@ -24,11 +25,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(session({
-  secret: process.env.COOKIE_SECRET,
+  secret: cookie_secret,
   resave: true,
   saveUninitialized: true,
   store: MongoStore.create({
-    mongoUrl: process.env.URI,
+    mongoUrl: uri,
     ttl:3600
   })
 }))

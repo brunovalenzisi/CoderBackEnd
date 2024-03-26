@@ -7,6 +7,7 @@ const cartManager = new CartManager
 
 router.get("/products", async (req, res) => {
     try{
+        if(!req.session.login){res.redirect("/login")}
         const hostURL = `${req.protocol}://${req.get("host")}`;
         const limit=req.query.limit
         const page=req.query.page
@@ -25,8 +26,10 @@ router.get("/products", async (req, res) => {
             genre: doc.genre,
             stock: doc.stock,
             hostURL: hostURL}})
-          const user={userName:req.session.user_first_name,admin:false}
+          const user={userName:req.session.user.first_name,admin:false}
             req.session.role==="admin"  && (user.admin = true)
+            console.log(req.session)
+            console.log(user)
         
             
         
