@@ -51,9 +51,11 @@ class ProductManager {
         filtro = { "category": query }; 
     }
 
-  
-
     const consulta = await productModel.paginate(filtro, options);
+    return consulta;
+}
+  async getProductsAll() {
+    const consulta = await productModel.find();
     return consulta;
 }
 

@@ -45,7 +45,6 @@ app.use(require('./routes/api/carts/carts.router'));
 app.use(require('./routes/views/views.router'));
 app.use(require('./routes/views/realtimeproducts.router'));
 app.use(require('./routes/api/users/user.router'));
-app.use(require('./routes/api/users/session.router'));
 app.use(require('./routes/views/sessions.router'));
 
 
@@ -59,7 +58,7 @@ const io = new socket.Server(httpServer);
 io.on('connection', (socket) => {
   console.log('Nuevo usuario conectado');
   socket.on('refresh', async() => {
-    const products= await manager.getProducts() 
+    const products= await manager.getProductsAll() 
     io.sockets.emit("productos",JSON.stringify(products))
   });
   
@@ -67,13 +66,13 @@ io.on('connection', (socket) => {
   const nuevoProducto=JSON.parse(product)
   const{title,description,code,price,stock,category,thumbnails}=nuevoProducto  
   await manager.addProduct(title,description,code,price,stock,category,thumbnails)
-  const products= await manager.getProducts() 
+  const products= await manager.getProductsAll() 
   io.sockets.emit("productos",JSON.stringify(products))
   })
   
   socket.on("delete", async(id) => {
   await manager.deleteProduct(id)
-  const products= await manager.getProducts() 
+  const products= await manager.getProductsAll() 
   io.sockets.emit("productos",JSON.stringify(products))
   })
 });

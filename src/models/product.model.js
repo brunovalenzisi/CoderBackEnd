@@ -9,7 +9,7 @@ price: {type: Number},
 description: {type: String},
 category: {type: String},
 subCategory: {type: String},
-thumbnails: {type: Array },
+thumbnails: {type: Array,default:[] },
 genre: {type: String},
 stock: {type: Number },
 })
