@@ -7,12 +7,13 @@ const socket = require('socket.io');
 const path = require('path');
 const session = require("express-session")
 const passport = require("passport");
-const initializePassport = require("./config/passport.config.js")
+const {initializePassport} = require("./config/passport.config.js")
 const MongoStore=require("connect-mongo")
 const app = express();
 const PORT = 8080;
 require("./dbConection")
-const {cookie_secret,uri}=require("./config/config.js")
+const {cookie_secret,uri}=require("./config/config.js");
+const cookieParser = require('cookie-parser');
 
 
 
@@ -24,6 +25,7 @@ app.set('view engine', 'handlebars');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser())
 app.use(session({
   secret: cookie_secret,
   resave: true,
@@ -34,6 +36,7 @@ app.use(session({
   })
 }))
 initializePassport()
+
 app.use(passport.initialize())
 app.use(passport.session())
 

@@ -1,6 +1,7 @@
 const Router = require ("express")
 const router= Router()
 const ProductManager=require("../../../productManager")
+const passport = require("passport")
 const manager = new ProductManager
 
 router.get("/api/products",async (req,res)=>{

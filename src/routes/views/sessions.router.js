@@ -1,9 +1,11 @@
 const Router = require("express");
 const router = Router();
 
+
 router.get("/login", async (req, res) => {
     try{
-        res.render("login");
+        const hostURL = `${req.protocol}://${req.get("host")}`;
+        res.render("login",{hostURL});
 
     }catch(e){console.error(e)}
 })

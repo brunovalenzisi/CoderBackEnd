@@ -8,7 +8,8 @@ dotenv.config({
 
 const configObject={
     uri:process.env.URI,
-    cookie_secret:process.env.COOKIE_SECRET
+    cookie_secret:process.env.COOKIE_SECRET,
+    jwt_secret_key:process.env.JWT_SECRET_KEY
 }
 
 

@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const userModel = require("../../../models/user.model");
 const {createHash}=require('../../../utils/bcrypt.utils')
-const passport=require("passport")
+const jwt=require("jsonwebtoken")
+const{jwt_secret_key}=require("../../../config/config.js")
 
 /*router.post("/api/users/sign-up", async (req, res) => {
   const  { first_name, last_name, email, password, age } = req.body;
@@ -17,25 +18,41 @@ const passport=require("passport")
   }
 });*/
 
-router.post("/api/users/sign-up",passport.authenticate("sign-up",{
-  failureRedirect:"/api/users/sign-up/fail"
-}),async (req,res)=>{
-  if(!req.user){return res.status(400).send({status:"error",message:"credenciales incalidas"})
-}
-req.session.user={
-first_name:req.user.first_name,
-last_name:req.user.last_name,
-age:req.user.age,
-email:req.user.email}
+router.post("/api/users/sign-up",async (req,res)=>{
+  try {
+    const{first_name,last_name,age,email,password}=req.body;
+    const existingUser= await userModel.findOne({email: email});
+    if (existingUser){res.send("el Usuario ya existe")
+   return}
+ 
+    const payload={
+      first_name,
+      last_name,
+      age,
+      email,
+      role: password.slice(0,5)==="admin"? "admin" : "user"
+    }
+    const token=jwt.sign(payload,jwt_secret_key,{expiresIn:"24h"})
+    const newUser={
+      ...payload,
+      password: createHash(password),
+    }
 
-req.session.login=true
-res.status(200).redirect("/products")
+    await userModel.create(newUser);
+
+   res.cookie("coderCookie",token).redirect("/login")
+  } catch (error) {
+    res.send(error.message)
+  }
+
+
+
+
+
 
 })
 
-router.get("/api/users/sign-up/fail",(req,res)=>{
-  res.send("Registro fallido")
-})
+
 
 
 

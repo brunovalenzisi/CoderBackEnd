@@ -4,10 +4,10 @@ const ProductManager=require("../../productManager")
 const CartManager=require("../../cartManager")
 const productManager = new ProductManager
 const cartManager = new CartManager
+const passport = require("passport")
 
-router.get("/products", async (req, res) => {
+router.get("/products",passport.authenticate("jwt",{session:false}), async (req, res) => {
     try{
-        if(!req.session.login){res.redirect("/login")}
         const hostURL = `${req.protocol}://${req.get("host")}`;
         const limit=req.query.limit
         const page=req.query.page
@@ -26,11 +26,8 @@ router.get("/products", async (req, res) => {
             genre: doc.genre,
             stock: doc.stock,
             hostURL: hostURL}})
-          const user={userName:req.session.user.first_name,admin:false}
-            req.session.role==="admin"  && (user.admin = true)
-            console.log(req.session)
-            console.log(user)
-        
+            const user={userName:req.user.first_name,admin:req.user.role=="admin"}
+           
             
         
         res.render("products", {data,consulta,hostURL,user});

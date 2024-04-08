@@ -3,10 +3,16 @@ const local = require("passport-local");
 const UserModel = require("../models/user.model");
 const { createHash, isValidPass } = require("../utils/bcrypt.utils");
 const GitHubStrategy = require("passport-github2");
+const jwt=require("passport-jwt");
+const JWTStrategy=jwt.Strategy
+const ExtractJwt=jwt.ExtractJwt
+const {jwt_secret_key}=require("./config.js");
+const LocalStrategy = local.Strategy;
 
-const LocaStrategy = local.Strategy;
+
+
 const initializePassport = () => {
-  passport.use(
+  /*passport.use(
     "sign-up",
     new LocaStrategy(
       {
@@ -35,8 +41,8 @@ const initializePassport = () => {
         }
       }
     )
-  );
-  passport.use(
+  );*/
+  /*passport.use(
     "login",
     new LocaStrategy(
       { usernameField: "email" },
@@ -55,7 +61,7 @@ const initializePassport = () => {
         }
       }
     )
-  );
+  );*/
   passport.serializeUser((user, done) => {
     done(null, user._id);
   });
@@ -96,6 +102,65 @@ const initializePassport = () => {
       }
     )
   );
+
+  passport.use('sign-up', new LocalStrategy({
+    usernameField: 'email', 
+    passwordField: 'password', 
+    passReqToCallback: true 
+  }, async (req, email, password, done) => {
+    try {
+      
+      const {first_name, last_name,age}=req.body
+      const existingUser = await UserModel.findOne({ email });
+      if (existingUser) {
+        return done(null, false, { message: 'El usuario ya existe' });
+      }
+       const newUser = await UserModel.create({
+        email,
+        password: createHash(password), 
+        first_name,
+        last_name,
+        age
+      });
+      
+  
+      return done(null, newUser);
+    } catch (error) {
+      return done(error);
+    }
+  }));
+
+  passport.use("jwt",new JWTStrategy({
+    jwtFromRequest:ExtractJwt.fromExtractors([cookieExtractor]),
+    secretOrKey:jwt_secret_key
+  },async (jwt_payload,done)=>{
+    try {
+      return done(null,jwt_payload);
+    } catch (error) {
+      return done(error)
+    }
+  }
+  ))
 };
 
-module.exports = initializePassport;
+const cookieExtractor  =(req)=>{
+let token=null
+if(req && req.cookies){
+  token=req.cookies["coderCookie"]
+}
+return token
+}
+
+const passportCall =(strategy)=>{
+return async(req, res, next)=>{
+  passport.authenticate(strategy,(error,user,info)=>{
+    if(error){return next(error)}
+    if(!user){res.status(401).send({error: info.message ? info.message : info.toString()})}
+    req.user=user
+    next()
+  })(req,res,next)
+}
+
+}
+
+module.exports = {initializePassport,passportCall}
