@@ -1,23 +1,9 @@
-const Router = require("express");
-const router = Router();
+const express = require("express");
+const router = express.Router();
+const ViewController=require("../../controllers/view.controller.js")
+const viewController=new ViewController()
 
-
-router.get("/login", async (req, res) => {
-    try{
-        const hostURL = `${req.protocol}://${req.get("host")}`;
-        res.render("login",{hostURL});
-
-    }catch(e){console.error(e)}
-})
-
-router.get("/sign-up", async (req, res) => {
-    try{
-        res.render("sign-up");
-
-    }catch(e){console.error(e)}
-})
-
-
-
+router.get("/login", viewController.renderLogin)
+router.get("/sign-up", viewController.renderSignUp)
 
 module.exports = router; 

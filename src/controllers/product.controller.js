@@ -1,3 +1,6 @@
+const ProductRepository=require("../repositories/product.repository.js")
+const productRepository=new ProductRepository()
+
 class ProductController{
     async obtenerProductos (req,res) {
 
@@ -8,7 +11,7 @@ class ProductController{
             const page=req.query.page
             const query=req.query.query
             const sort=req.query.sort
-            const consulta= await manager.getProducts(limit,page,query,sort)
+            const consulta= await productRepository.getProducts(limit,page,query,sort)
     
             const respuesta={
                 status: consulta?"success":error,
@@ -37,7 +40,7 @@ class ProductController{
 
         try{
             const id= req.params.pid
-            const producto = await manager.getProductById(id)
+            const producto = await productRepository.getProductById(id)
             if(producto){
                 
                 res.status(200).json(producto)}
@@ -48,7 +51,7 @@ class ProductController{
     }
     async agregarProducto (req,res) {
         const {title,description,code, price,stock,category,subCategory,thumbnails,genre} = req.body
-        const nuevoProducto = await manager.addProduct(title, description,code, price,stock,category,subCategory,thumbnails,genre)
+        const nuevoProducto = await productRepository.addProduct(title, description,code, price,stock,category,subCategory,thumbnails,genre)
         res.status(200).json(nuevoProducto)
         
         }
@@ -56,7 +59,7 @@ class ProductController{
             try{
                 const id= req.params.pid
                 const update={...req.body}
-                const respuesta= await manager.updateProduct(id,update)
+                const respuesta= await productRepository.updateProduct(id,update)
                 res.status(200).json(respuesta)
                }
             catch{(err)=>{res.status(500).send(err)}}
@@ -64,7 +67,7 @@ class ProductController{
         async eliminarProducto (req,res){
             try{
                 const id= req.params.pid
-                const respuesta= await manager.deleteProduct(id)
+                const respuesta= await productRepository.deleteProduct(id)
                 if(respuesta){
                     res.status(200).json(respuesta)
         

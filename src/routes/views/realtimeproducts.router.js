@@ -1,5 +1,5 @@
-const Router = require("express");
-const router = Router();
+const express = require("express");
+const router = express.Router();
 
 router.get("/realtimeproducts", async (req, res) => {
     res.render("realTimeProducts");
