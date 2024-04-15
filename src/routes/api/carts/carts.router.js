@@ -10,5 +10,7 @@ router.delete("/api/carts/:cid/products/:pid", cartController.quitarDelCarrito);
 router.put("/api/carts/:cid",cartController.actualizarCarrito);
 router.put("/api/carts/:cid/products/:pid", cartController.actualizarCatidad);
 router.delete("/api/carts/:cid",cartController.limpiarCarrito);
+router.delete("/api/carts/:cid",cartController.limpiarCarrito);
+router.get("/api/carts/:cid/purchase",cartController.comprarCarrito);
 
 module.exports = router;

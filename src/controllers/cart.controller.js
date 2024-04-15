@@ -1,5 +1,7 @@
 const CartRepository=require("../repositories/cart.repository.js")
 const cartRepository=new CartRepository()
+const{chequearCarrito}=require("../utils/cartController.utils.js")
+
 
 class CartController {
 
@@ -90,6 +92,20 @@ class CartController {
           const cid = req.params.cid
           const respuesta = await cartRepository.clearCart(cid);
           res.status(200).json(respuesta);
+        } catch {
+          (err) => {
+            res.status(500).send(err);
+          };
+        }
+      }
+      
+      async comprarCarrito (req, res)  {
+        try {
+          const cid = req.params.cid
+          const cart = await cartRepository.getCartById(cid);
+          const checkedCart= await chequearCarrito(cart.products)
+          console.log("checked: ",checkedCart)
+         
         } catch {
           (err) => {
             res.status(500).send(err);

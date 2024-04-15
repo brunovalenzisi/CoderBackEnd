@@ -1,7 +1,6 @@
 const UserDTO=require("../DTO/user.dto")
 const realTimeProductsMiddleware =async  (req, res, next) => {
     const user= await UserDTO.obtenerUsuario(req.cookies.coderCookie)
-    console.log(user.role)
     if (user && user.role === 'admin') {
       next();
     } else {
