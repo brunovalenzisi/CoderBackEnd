@@ -18,26 +18,27 @@ class CartRepository {
   }
 
   async addToCart(cid, pid) {
-    try{
-      const cart = await cartModel.findById(cid);
-      if (cart.products.some((prod) => prod._id === pid)) {
-          const product = cart.products.find((prod) => prod._id === pid);
-          product.quantity++;
-          await cart.save()
-          return "Producto actualizado con éxito";
-      } else {
-          cart.products.push({ product: pid});
-          await cart.save()
-          return "Producto agregado con éxito";
-      }
+    try {
+        const cart = await cartModel.findById(cid);
+        const existingProductIndex = cart.products.findIndex((prod) => prod.product.toString() === pid);
 
-    }catch(error){
-      console.log(error);
-      return "Error al agregar el producto";
-
-
+        if (existingProductIndex !== -1) {
+           
+            cart.products[existingProductIndex].quantity++;
+            await cart.save();
+            return "Producto actualizado con éxito";
+        } else {
+         
+            cart.products.push({ product: pid });
+            await cart.save();
+            return "Producto agregado con éxito";
+        }
+    } catch (error) {
+        console.log(error);
+        return "Error al agregar el producto";
     }
 }
+
   async removeFromCart(cid, pid) {
     try{
       const cart = await cartModel.findById(cid);

@@ -55,8 +55,12 @@ class UserController
                 cart:user.cart
               }
               const token=jwt.sign(payload,jwt_secret_key,{expiresIn:"24h"})
+              if(payload.role==="user"){
+                res.status(200).cookie("coderCookie",token,{maxAge:60*60*1000,httpOnly:true}).redirect("/products")
+              }else{
+                res.status(200).cookie("coderCookie",token,{maxAge:60*60*1000,httpOnly:true}).redirect("/realtimeproducts")
+              }
               
-              res.status(200).cookie("coderCookie",token,{maxAge:60*60*1000,httpOnly:true}).redirect("/products")
               
             } else {
               res.status(401).send("Contraseña incorrecta");  

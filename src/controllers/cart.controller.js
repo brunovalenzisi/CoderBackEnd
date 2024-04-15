@@ -1,6 +1,10 @@
 const CartRepository=require("../repositories/cart.repository.js")
 const cartRepository=new CartRepository()
-const{chequearCarrito}=require("../utils/cartController.utils.js")
+const TicketRepository=require("../repositories/ticket.repository.js")
+const ticketRepository=new TicketRepository()
+const{chequearCarrito,generarTicket}=require("../utils/cartController.utils.js")
+const UserDTO=require("../DTO/user.dto.js");
+
 
 
 class CartController {
@@ -101,10 +105,24 @@ class CartController {
       
       async comprarCarrito (req, res)  {
         try {
+          const user= await UserDTO.obtenerUsuario(req.cookies.coderCookie)
           const cid = req.params.cid
           const cart = await cartRepository.getCartById(cid);
-          const checkedCart= await chequearCarrito(cart.products)
-          console.log("checked: ",checkedCart)
+          const filtrados= (await chequearCarrito(cart.products))
+          const conStock= filtrados.conStock
+          const sinStock= filtrados.sinStock
+          const ticket= await generarTicket(conStock,user)
+          const newTicket=await ticketRepository.crearTicket(ticket)
+          console.log(newTicket)
+          if(sinStock.length > 0) {
+          await cartRepository.clearCart(cid)
+          await cartRepository.updateCart(cid,sinStock)
+          res.status(200).json({status:"ok",completed:"false",message:"Tu compra fue exitosa, sin embargo, algunos items no pudieron procesarse por falta de stock",payload:newTicket})
+          }
+          else{
+            await cartRepository.clearCart(cid)
+            res.status(200).json({status:"ok",completed:"true",message:"Tu compra fue exitosa",payload:newTicket})}
+          
          
         } catch {
           (err) => {
