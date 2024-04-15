@@ -25,7 +25,7 @@ socket.on("productos",(data)=>{
         <p>Stock: ${product.stock}</p>
         <div class="thumbnails">
             <p>Imagenes del producto</p>
-            ${product.thumbnails.map(link => `<p>${link}</p>`).join('')}
+            ${product.thumbnails.map(link => `<a href=${link}>${link}</p>`).join('')}
         </div>
         <button onclick="eliminarProducto('${product._id}')">Eliminar</button>
     </div>`;

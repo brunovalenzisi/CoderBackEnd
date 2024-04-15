@@ -6,7 +6,8 @@ class CartController {
     async crearCarrito (req, res) {
         try {
           const newCart= await cartRepository.addCart();
-          res.status(200).json(newCart);
+          return newCart;
+          
         } catch {
           (err) => {
             res.status(500).send(err);

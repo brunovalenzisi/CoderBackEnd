@@ -5,5 +5,6 @@ const viewController=new ViewController()
 
 router.get("/login", viewController.renderLogin)
 router.get("/sign-up", viewController.renderSignUp)
+router.get("/profile", viewController.renderProfile)
 
 module.exports = router; 

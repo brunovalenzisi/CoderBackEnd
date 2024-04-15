@@ -1,7 +1,7 @@
 const express = require('express');
 require('dotenv').config()
-const ProductManager = require('./productManager');
-const manager = new ProductManager();
+const ProductRepository = require('./repositories/product.repository.js');
+const productRepository = new ProductRepository();
 const exphbs = require('express-handlebars');
 const socket = require('socket.io');
 const path = require('path');
@@ -58,21 +58,21 @@ const io = new socket.Server(httpServer);
 io.on('connection', (socket) => {
   console.log('Nuevo usuario conectado');
   socket.on('refresh', async() => {
-    const products= await manager.getProductsAll() 
+    const products= await productRepository.getProductsAll() 
     io.sockets.emit("productos",JSON.stringify(products))
   });
   
   socket.on("add", async(product) => {
   const nuevoProducto=JSON.parse(product)
   const{title,description,code,price,stock,category,thumbnails}=nuevoProducto  
-  await manager.addProduct(title,description,code,price,stock,category,thumbnails)
-  const products= await manager.getProductsAll() 
+  await productRepository.addProduct(title,description,code,price,stock,category,thumbnails)
+  const products= await productRepository.getProductsAll() 
   io.sockets.emit("productos",JSON.stringify(products))
   })
   
   socket.on("delete", async(id) => {
-  await manager.deleteProduct(id)
-  const products= await manager.getProductsAll() 
+  await productRepository.deleteProduct(id)
+  const products= await productRepository.getProductsAll() 
   io.sockets.emit("productos",JSON.stringify(products))
   })
 });

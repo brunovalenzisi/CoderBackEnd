@@ -2,6 +2,7 @@ const ProductRepository=require("../repositories/product.repository.js")
 const CartRepository=require("../repositories/cart.repository.js")
 const productRepository=new ProductRepository()
 const cartRepository=new CartRepository()
+const UserDTO=require("../DTO/user.dto.js")
 class ViewController {
 
 
@@ -19,6 +20,14 @@ class ViewController {
     
         }catch(e){console.error(e)}
     }
+   
+    async renderProfile (req, res)  {
+        try{
+            const user= await UserDTO.obtenerUsuario(req.cookies.coderCookie)
+            res.render("profile",{user});
+    
+        }catch(e){console.error(e)}
+    }
 
     async renderProducts (req, res)  {
         try{
@@ -28,6 +37,7 @@ class ViewController {
             const query=req.query.query
             const sort=req.query.sort
             const consulta= await productRepository.getProducts(limit, page, query, sort)
+            const userData= await UserDTO.obtenerUsuario(req.cookies.coderCookie)
             const data= consulta.docs.map((doc)=>{return{
                 _id: doc._id,
                 code: doc.code,
@@ -39,12 +49,10 @@ class ViewController {
                 thumbnails: doc.thumbnails,
                 genre: doc.genre,
                 stock: doc.stock,
-                hostURL: hostURL}})
-                const user={userName:req.user.first_name,admin:req.user.role=="admin"}
-               
-                
-            
-            res.render("products", {data,consulta,hostURL,user});
+                hostURL: hostURL,
+                cart:userData.cart}})
+                const user={userName:req.user.first_name,admin:req.user.role=="admin",cart:userData.cart}
+               res.render("products", {data,consulta,hostURL,user});
     
         }catch(e){console.error(e)}
     }

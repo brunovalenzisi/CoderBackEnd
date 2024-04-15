@@ -2,6 +2,8 @@ const {isValidPass,createHash}=require("../utils/bcrypt.utils.js")
 const jwt=require("jsonwebtoken");
 const UserRepository=require("../repositories/user.repository.js")
 const userRepository=new UserRepository
+const CartController=require("../controllers/cart.controller.js")
+const cartController=new CartController()
 const {jwt_secret_key}=require("../config/config.js");
 
 
@@ -14,7 +16,6 @@ class UserController
           const existingUser= await userRepository.bucarUsuarioPorEmail(email);
           if (existingUser){res.send("el Usuario ya existe")
          return}
-       
           const payload={
             first_name,
             last_name,
@@ -22,6 +23,7 @@ class UserController
             email,
             role: password.slice(0,5)==="admin"? "admin" : "user"
           }
+          payload.role==="user" && (payload.cart=await cartController.crearCarrito(req,res))
           const token=jwt.sign(payload,jwt_secret_key,{expiresIn:"24h"})
           const newUser={
             ...payload,
@@ -49,7 +51,8 @@ class UserController
                 last_name:user.last_name,  
                 email:user.email,  
                 age:user.age, 
-                role:user.role
+                role:user.role,
+                cart:user.cart
               }
               const token=jwt.sign(payload,jwt_secret_key,{expiresIn:"24h"})
               
