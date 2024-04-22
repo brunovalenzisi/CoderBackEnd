@@ -1,5 +1,6 @@
 const ProductRepository=require("../repositories/product.repository.js")
 const productRepository=new ProductRepository()
+const generarFakeProduct=require("../utils/mocking.utils.js")
 
 class ProductController{
     async obtenerProductos (req,res) {
@@ -36,6 +37,21 @@ class ProductController{
         catch{(err)=>{res.status(500).send(err)}}
     
     }
+
+    obtenerProductosMoking=(req,res)=>{
+        try {
+            const products=[];
+            for(let i=0;i<100;i++){
+                products.push(generarFakeProduct())
+            }
+            res.status(200).send(products)
+            
+        } catch (error) {
+            res.status(500).send("error del server")
+        }
+
+    }
+
     async obtenerProductoPorId (req,res){
 
         try{
@@ -74,6 +90,12 @@ class ProductController{
                 }else{res.status(404).send("not Found")}
                }
             catch{(err)=>{res.status(500).send(err)}}
+        }
+
+        async obtenerMokingProducts(){
+
+             
+
         }
 
 }

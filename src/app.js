@@ -18,6 +18,7 @@ const cookieParser = require('cookie-parser');
 
 
 
+
 app.engine('handlebars', exphbs.engine());
 app.set('view engine', 'handlebars');
 
@@ -39,6 +40,7 @@ initializePassport()
 
 app.use(passport.initialize())
 app.use(passport.session())
+
 
 app.use(require('./routes/api/products/products.router'));
 app.use(require('./routes/api/carts/carts.router'));

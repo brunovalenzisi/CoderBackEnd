@@ -5,14 +5,27 @@ const userRepository=new UserRepository
 const CartController=require("../controllers/cart.controller.js")
 const cartController=new CartController()
 const {jwt_secret_key}=require("../config/config.js");
+const CustomError=require("../services/errors/custom-error.js");
+const { generarInfoError } = require("../services/errors/info.js");
+const Errors=require("../services/errors/enums.js");
+const manejadorDeError = require("../middlewares/error.middleware.js");
 
 
 
 class UserController
 {
     async crearUsuario (req,res) {
+      const{first_name,last_name,age,email,password}=req.body;
         try {
-          const{first_name,last_name,age,email,password}=req.body;
+          if(!first_name || !last_name || !age || !email || !password){
+            
+            CustomError.crearError({
+            nombre:"Nuevo Usuario",
+            causa:generarInfoError({first_name,last_name,email,password,age}),
+            mensaje:"Error al intentar crear un usuario",
+            codigo:Errors.TIPO_INVALIDO})
+           
+          }
           const existingUser= await userRepository.bucarUsuarioPorEmail(email);
           if (existingUser){res.send("el Usuario ya existe")
          return}
@@ -34,8 +47,9 @@ class UserController
       
          res.cookie("coderCookie",token).redirect("/login")
         } catch (error) {
-          res.send(error.message)
-        }
+          manejadorDeError(error,req,res);
+          
+          }
       
       }
       async iniciarSesion  (req, res)  {
