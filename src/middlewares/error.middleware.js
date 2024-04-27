@@ -2,7 +2,7 @@ const Errors=require("../services/errors/enums.js")
 
 const manejadorDeError = (error, req, res) => {
     
-    console.log("error:",error.cause);
+    req.logger.error(error.cause);
 
     switch (error.code) {
         

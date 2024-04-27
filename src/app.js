@@ -14,6 +14,7 @@ const PORT = 8080;
 require("./dbConection")
 const {cookie_secret,uri}=require("./config/config.js");
 const cookieParser = require('cookie-parser');
+const addLogger=require('./utils/logger.utils.js');
 
 
 
@@ -40,14 +41,16 @@ initializePassport()
 
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(addLogger)
 
 
-app.use(require('./routes/api/products/products.router'));
-app.use(require('./routes/api/carts/carts.router'));
-app.use(require('./routes/views/views.router'));
-app.use(require('./routes/views/realtimeproducts.router'));
-app.use(require('./routes/api/users/user.router'));
-app.use(require('./routes/views/sessions.router'));
+app.use(require('./routes/api/products/products.router.js'));
+app.use(require('./routes/api/carts/carts.router.js'));
+app.use(require('./routes/views/views.router.js'));
+app.use(require('./routes/views/realtimeproducts.router.js'));
+app.use(require('./routes/api/users/user.router.js'));
+app.use(require('./routes/views/sessions.router.js'));
+app.use(require('./routes/logger/logger.router.js'))
 
 
 const httpServer = app.listen(PORT, () => {

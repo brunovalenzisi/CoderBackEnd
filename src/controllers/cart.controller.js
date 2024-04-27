@@ -113,7 +113,6 @@ class CartController {
           const sinStock= filtrados.sinStock
           const ticket= await generarTicket(conStock,user)
           const newTicket=await ticketRepository.crearTicket(ticket)
-          console.log(newTicket)
           if(sinStock.length > 0) {
           await cartRepository.clearCart(cid)
           await cartRepository.updateCart(cid,sinStock)

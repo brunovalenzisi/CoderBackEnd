@@ -83,7 +83,7 @@ class UserController
             res.status(404).send("Usuario no encontrado");
           }
         } catch (e) {
-          console.log(e);
+          req.logger.error(e);
           res.status(400).send("Error al iniciar sesión");
         }
       }
