@@ -4,9 +4,9 @@
   "description": "desafio3",
   "main": "app.js",
   "scripts": {
-    "test": "nodemon ./app.js --mode produccion",
-    "dev": "nodemon ./app.js --mode desarrollo",
-    "start": "node ./app.js --mode produccion"
+    "test": "nodemon ./app.js",
+    "dev": "nodemon ./app.js",
+    "start": "node ./app.js"
   },
   "author": "BValenzisi",
   "license": "ISC",

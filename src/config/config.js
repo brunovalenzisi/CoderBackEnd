@@ -1,4 +1,4 @@
-const dotenv = require("dotenv")
+/*const dotenv = require("dotenv")
 const program=require("../utils/commander.js")
 const {mode} = program.opts()
 
@@ -13,4 +13,4 @@ const configObject={
 }
 
 
-module.exports=configObject
+module.exports=configObject*/

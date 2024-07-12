@@ -12,7 +12,8 @@ const MongoStore=require("connect-mongo")
 const app = express();
 const PORT = 8080;
 require("./src/dbConection")
-const {cookie_secret,uri}=require("./src/config/config.js");
+const cookie_secret=process.env.COOKIE_SECRET
+const uri=process.env.URI
 const cookieParser = require('cookie-parser');
 const addLogger=require('./src/utils/logger.utils.js');
 
@@ -43,7 +44,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(addLogger)
 
-app.get("/",(requ,res)=>{res.status(200).send("Bienvenido!")})
+app.get("/",(req,res)=>{res.status(200).send("Bienvenido!")})
 app.use(require('./src/routes/api/products/products.router.js'));
 app.use(require('./src/routes/api/carts/carts.router.js'));
 app.use(require('./src/routes/views/views.router.js'));
