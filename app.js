@@ -43,7 +43,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(addLogger)
 
-
+app.get("/",(requ,res)=>{res.status(200).send("Bienvenido!")})
 app.use(require('./src/routes/api/products/products.router.js'));
 app.use(require('./src/routes/api/carts/carts.router.js'));
 app.use(require('./src/routes/views/views.router.js'));

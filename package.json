@@ -2,7 +2,7 @@
   "name": "3-servidor",
   "version": "1.0.0",
   "description": "desafio3",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "nodemon ./app.js --mode produccion",
     "dev": "nodemon ./app.js --mode desarrollo",
