@@ -14,7 +14,7 @@ class CartRepository {
       return cart!=null ? cart : "Not found";
 
     }
-    catch(err){console.log(err)}
+    catch(err){req.logger.error(err)}
   }
 
   async addToCart(cid, pid) {
@@ -34,7 +34,7 @@ class CartRepository {
             return "Producto agregado con éxito";
         }
     } catch (error) {
-        console.log(error);
+      req.logger.error(error);
         return "Error al agregar el producto";
     }
 }
@@ -50,7 +50,7 @@ class CartRepository {
       }else{return "No se encuentra el producto"}
 
     }catch(error){ 
-      console.log(error);
+      req.logger.error(error);
       return "Error al actualizar el carrito";}
     
 }
@@ -63,7 +63,7 @@ async updateCart(cid,newCart) {
       return cart;
 
   }catch(error){
-    console.log(error);
+    req.logger.error(error);
     return "Error al actualizar el carrito";
   }
     }
@@ -78,7 +78,7 @@ async updateCart(cid,newCart) {
 
       }
       catch (error) {
-        console.log(error);
+        req.logger.error(error);
         return "Error al actualizar el producto";
     }
       }
@@ -90,7 +90,7 @@ async updateCart(cid,newCart) {
             await cart.save();
             return "El carrito está vacío";
         } catch (error) {
-            console.log(error);
+          req.logger.error(error);
             return "Error al limpiar el carrito";
         }
     }

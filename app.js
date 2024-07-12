@@ -1,20 +1,20 @@
 const express = require('express');
 require('dotenv').config()
-const ProductRepository = require('./repositories/product.repository.js');
+const ProductRepository = require('./src/repositories/product.repository.js');
 const productRepository = new ProductRepository();
 const exphbs = require('express-handlebars');
 const socket = require('socket.io');
 const path = require('path');
 const session = require("express-session")
 const passport = require("passport");
-const {initializePassport} = require("./config/passport.config.js")
+const {initializePassport} = require("./src/config/passport.config.js")
 const MongoStore=require("connect-mongo")
 const app = express();
 const PORT = 8080;
-require("./dbConection")
-const {cookie_secret,uri}=require("./config/config.js");
+require("./src/dbConection")
+const {cookie_secret,uri}=require("./src/config/config.js");
 const cookieParser = require('cookie-parser');
-const addLogger=require('./utils/logger.utils.js');
+const addLogger=require('./src/utils/logger.utils.js');
 
 
 
@@ -44,13 +44,13 @@ app.use(passport.session())
 app.use(addLogger)
 
 
-app.use(require('./routes/api/products/products.router.js'));
-app.use(require('./routes/api/carts/carts.router.js'));
-app.use(require('./routes/views/views.router.js'));
-app.use(require('./routes/views/realtimeproducts.router.js'));
-app.use(require('./routes/api/users/user.router.js'));
-app.use(require('./routes/views/sessions.router.js'));
-app.use(require('./routes/logger/logger.router.js'))
+app.use(require('./src/routes/api/products/products.router.js'));
+app.use(require('./src/routes/api/carts/carts.router.js'));
+app.use(require('./src/routes/views/views.router.js'));
+app.use(require('./src/routes/views/realtimeproducts.router.js'));
+app.use(require('./src/routes/api/users/user.router.js'));
+app.use(require('./src/routes/views/sessions.router.js'));
+app.use(require('./src/routes/logger/logger.router.js'))
 
 
 const httpServer = app.listen(PORT, () => {
