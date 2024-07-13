@@ -1,5 +1,5 @@
 const  mongoose = require('mongoose');
-const uri=process.env.URI
+const{uri}=require('./config/config.js')
 
 
  mongoose.connect(uri)

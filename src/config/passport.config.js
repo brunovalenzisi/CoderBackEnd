@@ -6,7 +6,7 @@ const GitHubStrategy = require("passport-github2");
 const jwt=require("passport-jwt");
 const JWTStrategy=jwt.Strategy
 const ExtractJwt=jwt.ExtractJwt
-const jwt_secret_key=process.env.JWT_SECRET_KEY;
+const {jwt_secret_key}=require("./config.js");
 const LocalStrategy = local.Strategy;
 
 

@@ -65,13 +65,13 @@ class ProductRepository {
         return null; 
       }
     } catch (error) {
-      req.logger.error("el id no es valido")
+     console.log("el id no es valido")
     }
   }
  
   async updateProduct(id, updatedInfo) {
     if ("_id" in updatedInfo) {
-      req.logger.warning("No puedes actualizar el id del producto")
+      console.log("No puedes actualizar el id del producto")
       return("No puedes actualizar el id del producto");
     } else {
       const product = await this.getProductById(id);
@@ -94,7 +94,7 @@ class ProductRepository {
         return null; 
       }
     } catch (error) {
-      req.logger.warning("el id no es valido")
+     console.log("el id no es valido")
     }
   
   }
